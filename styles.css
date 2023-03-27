@@ -1,0 +1,59 @@
+.centering-cheat {
+    position: absolute;
+    left: 50%;
+    height: 100%;
+}
+
+.chessboard {
+    position: relative;
+    left: -50%;
+    top: 15%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    min-width: 600px;
+    height: 70%;
+    aspect-ratio: 1/1;
+    border: solid black 1px
+}
+
+.rendered-black-tile-piece {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
+}
+
+.rendered-white-tile-piece {
+    background-color: grey;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.highlight-board {
+    position: relative;
+    left: -50%;
+    top: 15%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    height: 70%;
+    aspect-ratio: 1/1;
+    border: solid black 1px;
+    opacity: .5;
+    display: hidden;
+}
+
+.highlighted-move-option {
+    width: 100%;
+    height: 100%;
+    background-color: green;
+}
+
+.highlighted-piece {
+    width: 100%;
+    height: 100%;
+    background-color: aqua;
+}
