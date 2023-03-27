@@ -102,7 +102,7 @@ tileH1 = new GameBoardSlot('white', 1, 8, 'white', 'rook');
 
 window.addEventListener("load", (event) => {
     renderGameBoard();
-  });
+});
 
 // gameboard array
 
@@ -176,6 +176,11 @@ function renderGameBoard() {
 
 function renderGameMovementBoard() {
 
+    // TESTING A FILTER TO REMOVE MISTAKEN OPTIONS
+    let doubleCheck = activeTile[0];
+    let actualpossibleMoves = possibleMoves.filter(tile => (gameBoardArray[tile].ownership != gameBoardArray[doubleCheck].ownership))
+
+
     document.querySelector(".chessboard").innerHTML = '';
 
     gameBoardArray.forEach(function (information, idx) {
@@ -202,7 +207,7 @@ function renderGameMovementBoard() {
             renderedTilePiece.onclick = function () {
                 renderGameBoard();
             }
-        } else if (possibleMoves.includes(idx)) {
+        } else if (actualpossibleMoves.includes(idx)) {
             renderedTilePiece.className = 'highlighted-move-option';
             renderedTilePiece.onclick = function () {
                 declareMoveToTile(idx);
@@ -260,22 +265,22 @@ function movePAWN(tileInfo) {
     }
 
     // angle attack availability
-    if((pawnColor === 'white') && (checkForMoveCollision((currentX - 1), (currentY + 1))) && (gameBoardArray[getWhichTile((currentX - 1), (currentY + 1))].ownership === 'black')) {
+    if ((pawnColor === 'white') && (checkForMoveCollision((currentX - 1), (currentY + 1))) && (gameBoardArray[getWhichTile((currentX - 1), (currentY + 1))].ownership === 'black')) {
         let possibleMove = getWhichTile((currentX - 1), (currentY + 1))
         possibleMoves.push(possibleMove)
-    } 
-    
-    if((pawnColor === 'white') && (checkForMoveCollision((currentX + 1), (currentY + 1))) && (gameBoardArray[getWhichTile((currentX + 1), (currentY + 1))].ownership === 'black')) {
+    }
+
+    if ((pawnColor === 'white') && (checkForMoveCollision((currentX + 1), (currentY + 1))) && (gameBoardArray[getWhichTile((currentX + 1), (currentY + 1))].ownership === 'black')) {
         let possibleMove = getWhichTile((currentX + 1), (currentY + 1))
         possibleMoves.push(possibleMove)
     }
 
-    if((pawnColor === 'black') && (checkForMoveCollision((currentX - 1), (currentY - 1))) && (gameBoardArray[getWhichTile((currentX - 1), (currentY - 1))].ownership === 'white')) {
+    if ((pawnColor === 'black') && (checkForMoveCollision((currentX - 1), (currentY - 1))) && (gameBoardArray[getWhichTile((currentX - 1), (currentY - 1))].ownership === 'white')) {
         let possibleMove = getWhichTile((currentX - 1), (currentY - 1))
         possibleMoves.push(possibleMove)
     }
 
-    if((pawnColor === 'black') && (checkForMoveCollision((currentX + 1), (currentY - 1))) && (gameBoardArray[getWhichTile((currentX + 1), (currentY - 1))].ownership === 'white')) {
+    if ((pawnColor === 'black') && (checkForMoveCollision((currentX + 1), (currentY - 1))) && (gameBoardArray[getWhichTile((currentX + 1), (currentY - 1))].ownership === 'white')) {
         let possibleMove = getWhichTile((currentX + 1), (currentY - 1))
         possibleMoves.push(possibleMove)
     }
@@ -295,7 +300,7 @@ function moveKNIGHT(tileInfo) {
     possibleMoves = [];
 
     // left 1 up 2
-    if((checkForMoveCollision((currentX - 1), (currentY + 2))) && ((gameBoardArray[getWhichTile((currentX - 1), (currentY + 2))].ownership) != knightColor)) {
+    if ((checkForMoveCollision((currentX - 1), (currentY + 2))) && ((gameBoardArray[getWhichTile((currentX - 1), (currentY + 2))].ownership) != knightColor)) {
         let possibleMove = getWhichTile((currentX - 1), (currentY + 2))
         possibleMoves.push(possibleMove)
     } else if ((checkForMoveCollision((currentX - 1), (currentY + 2))) === false) {
@@ -303,7 +308,7 @@ function moveKNIGHT(tileInfo) {
         possibleMoves.push(possibleMove)
     }
     // left 2 up 1
-    if((checkForMoveCollision((currentX - 2), (currentY + 1))) && ((gameBoardArray[getWhichTile((currentX - 2), (currentY + 1))].ownership) != knightColor)) {
+    if ((checkForMoveCollision((currentX - 2), (currentY + 1))) && ((gameBoardArray[getWhichTile((currentX - 2), (currentY + 1))].ownership) != knightColor)) {
         let possibleMove = getWhichTile((currentX - 2), (currentY + 1))
         possibleMoves.push(possibleMove)
     } else if ((checkForMoveCollision((currentX - 2), (currentY + 1))) === false) {
@@ -311,7 +316,7 @@ function moveKNIGHT(tileInfo) {
         possibleMoves.push(possibleMove)
     }
     // left 2 down 1
-    if((checkForMoveCollision((currentX - 2), (currentY - 1))) && ((gameBoardArray[getWhichTile((currentX - 2), (currentY - 1))].ownership) != knightColor)) {
+    if ((checkForMoveCollision((currentX - 2), (currentY - 1))) && ((gameBoardArray[getWhichTile((currentX - 2), (currentY - 1))].ownership) != knightColor)) {
         let possibleMove = getWhichTile((currentX - 2), (currentY - 1))
         possibleMoves.push(possibleMove)
     } else if ((checkForMoveCollision((currentX - 2), (currentY - 1))) === false) {
@@ -319,7 +324,7 @@ function moveKNIGHT(tileInfo) {
         possibleMoves.push(possibleMove)
     }
     // left 1 down 2
-    if((checkForMoveCollision((currentX - 1), (currentY - 2))) && ((gameBoardArray[getWhichTile((currentX - 1), (currentY - 2))].ownership) != knightColor)) {
+    if ((checkForMoveCollision((currentX - 1), (currentY - 2))) && ((gameBoardArray[getWhichTile((currentX - 1), (currentY - 2))].ownership) != knightColor)) {
         let possibleMove = getWhichTile((currentX - 1), (currentY - 2))
         possibleMoves.push(possibleMove)
     } else if ((checkForMoveCollision((currentX - 1), (currentY - 2))) === false) {
@@ -327,7 +332,7 @@ function moveKNIGHT(tileInfo) {
         possibleMoves.push(possibleMove)
     }
     // right 1 up 2
-    if((checkForMoveCollision((currentX + 1), (currentY + 2))) && ((gameBoardArray[getWhichTile((currentX + 1), (currentY + 2))].ownership) != knightColor)) {
+    if ((checkForMoveCollision((currentX + 1), (currentY + 2))) && ((gameBoardArray[getWhichTile((currentX + 1), (currentY + 2))].ownership) != knightColor)) {
         let possibleMove = getWhichTile((currentX + 1), (currentY + 2))
         possibleMoves.push(possibleMove)
     } else if ((checkForMoveCollision((currentX + 1), (currentY + 2))) === false) {
@@ -335,7 +340,7 @@ function moveKNIGHT(tileInfo) {
         possibleMoves.push(possibleMove)
     }
     // right 2 up 1
-    if((checkForMoveCollision((currentX + 2), (currentY + 1))) && ((gameBoardArray[getWhichTile((currentX + 2), (currentY + 1))].ownership) != knightColor)) {
+    if ((checkForMoveCollision((currentX + 2), (currentY + 1))) && ((gameBoardArray[getWhichTile((currentX + 2), (currentY + 1))].ownership) != knightColor)) {
         let possibleMove = getWhichTile((currentX + 2), (currentY + 1))
         possibleMoves.push(possibleMove)
     } else if ((checkForMoveCollision((currentX + 2), (currentY + 1))) === false) {
@@ -343,7 +348,7 @@ function moveKNIGHT(tileInfo) {
         possibleMoves.push(possibleMove)
     }
     // right 2 down 1
-    if((checkForMoveCollision((currentX + 2), (currentY - 1))) && ((gameBoardArray[getWhichTile((currentX + 2), (currentY - 1))].ownership) != knightColor)) {
+    if ((checkForMoveCollision((currentX + 2), (currentY - 1))) && ((gameBoardArray[getWhichTile((currentX + 2), (currentY - 1))].ownership) != knightColor)) {
         let possibleMove = getWhichTile((currentX + 2), (currentY - 1))
         possibleMoves.push(possibleMove)
     } else if ((checkForMoveCollision((currentX + 2), (currentY - 1))) === false) {
@@ -351,7 +356,7 @@ function moveKNIGHT(tileInfo) {
         possibleMoves.push(possibleMove)
     }
     // right 1 down 2
-    if((checkForMoveCollision((currentX + 1), (currentY - 2))) && ((gameBoardArray[getWhichTile((currentX + 1), (currentY - 2))].ownership) != knightColor)) {
+    if ((checkForMoveCollision((currentX + 1), (currentY - 2))) && ((gameBoardArray[getWhichTile((currentX + 1), (currentY - 2))].ownership) != knightColor)) {
         let possibleMove = getWhichTile((currentX + 1), (currentY - 2))
         possibleMoves.push(possibleMove)
     } else if ((checkForMoveCollision((currentX + 1), (currentY - 2))) === false) {
@@ -365,18 +370,206 @@ function moveKNIGHT(tileInfo) {
 
 function moveKING(tileInfo) {
     let piecetype = tileInfo.ownershipType
-    let pawnColor = tileInfo.ownership
+    let kingColor = tileInfo.ownership
     let currentX = tileInfo.column
     let currentY = tileInfo.row
-    console.log(pawnColor, piecetype, currentX, currentY)
+    console.log(kingColor, piecetype, currentX, currentY)
+
+    possibleMoves = [];
+
+    declareActiveTile(currentX, currentY);
+
+    // right
+    if ((checkForMoveCollision((currentX + 1), currentY)) && ((gameBoardArray[getWhichTile((currentX + 1), currentY)].ownership) != kingColor)) {
+        let possibleMove = getWhichTile((currentX + 1), currentY)
+        possibleMoves.push(possibleMove)
+    } else if ((checkForMoveCollision((currentX + 1), currentY)) === false) {
+        let possibleMove = getWhichTile((currentX + 1), currentY)
+        possibleMoves.push(possibleMove)
+    }
+
+    // left
+    if ((checkForMoveCollision((currentX - 1), currentY)) && ((gameBoardArray[getWhichTile((currentX - 1), currentY)].ownership) != kingColor)) {
+        let possibleMove = getWhichTile((currentX - 1), currentY)
+        possibleMoves.push(possibleMove)
+    } else if ((checkForMoveCollision((currentX - 1), currentY)) === false) {
+        let possibleMove = getWhichTile((currentX - 1), currentY)
+        possibleMoves.push(possibleMove)
+    }
+
+    // UP
+    if ((checkForMoveCollision(currentX, (currentY + 1))) && ((gameBoardArray[getWhichTile(currentX, (currentY + 1))].ownership) != kingColor)) {
+        let possibleMove = getWhichTile(currentX, (currentY + 1))
+        possibleMoves.push(possibleMove)
+    } else if ((checkForMoveCollision(currentX, (currentY + 1))) === false) {
+        let possibleMove = getWhichTile(currentX, (currentY + 1))
+        possibleMoves.push(possibleMove)
+    }
+
+    
+    // DOWN
+    if ((checkForMoveCollision(currentX, (currentY - 1))) && ((gameBoardArray[getWhichTile(currentX, (currentY - 1))].ownership) != kingColor)) {
+        let possibleMove = getWhichTile(currentX, (currentY - 1))
+        possibleMoves.push(possibleMove)
+    } else if ((checkForMoveCollision(currentX, (currentY - 1))) === false) {
+        let possibleMove = getWhichTile(currentX, (currentY - 1))
+        possibleMoves.push(possibleMove)
+    }
+
+    renderGameMovementBoard()
 }
 
 function moveQUEEN(tileInfo) {
     let piecetype = tileInfo.ownershipType
-    let pawnColor = tileInfo.ownership
+    let queenColor = tileInfo.ownership
     let currentX = tileInfo.column
     let currentY = tileInfo.row
-    console.log(pawnColor, piecetype, currentX, currentY)
+    console.log(queenColor, piecetype, currentX, currentY)
+
+
+    possibleMoves = [];
+
+    declareActiveTile(currentX, currentY);
+
+    let distN = 8 - currentY;
+    let distS = 0 + currentY;
+    let distW = 0 + currentX;
+    let distE = 8 - currentX;
+
+    // North East Quadrant Movement
+    let i = 1
+
+    while (distN > i || distE > i) {
+        if ((checkForMoveCollision((currentX + i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY + i))].ownership) !== queenColor)) {
+            let possibleMove = getWhichTile((currentX + i), (currentY + i))
+            possibleMoves.push(possibleMove)
+        } else if ((checkForMoveCollision((currentX + i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY + i))].ownership) === queenColor)) {
+            break;
+        } else {
+            let possibleMove = getWhichTile((currentX + i), (currentY + i))
+            possibleMoves.push(possibleMove)
+        }
+        i++
+    }
+
+    // North West Quadrant
+    i = 1
+
+    while (distN > i || distW > i) {
+        if ((checkForMoveCollision((currentX - i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX - i), (currentY + i))].ownership) !== queenColor)) {
+            let possibleMove = getWhichTile((currentX - i), (currentY + i))
+            possibleMoves.push(possibleMove)
+            break;
+        } else if ((checkForMoveCollision((currentX - i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX - i), (currentY + i))].ownership) === queenColor)) {
+            break;
+        } else {
+            let possibleMove = getWhichTile((currentX - i), (currentY + i))
+            possibleMoves.push(possibleMove)
+        }
+        i++
+    }
+
+    // South East Quadrant
+
+    i = 1
+
+    while (distS > i || distE > i) {
+        if ((checkForMoveCollision((currentX + i), (currentY - i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY - i))].ownership) !== queenColor)) {
+            let possibleMove = getWhichTile((currentX + i), (currentY - i))
+            possibleMoves.push(possibleMove)
+            break;
+        } else if ((checkForMoveCollision((currentX + i), (currentY - i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY - i))].ownership) === queenColor)) {
+            break;
+        } else {
+            let possibleMove = getWhichTile((currentX + i), (currentY - i))
+            possibleMoves.push(possibleMove)
+        }
+        i++
+    }
+
+    // South West Quadrant
+
+    i = 1
+
+    while (distS > i || distW > i) {
+        if ((checkForMoveCollision((currentX - i), (currentY - i))) && ((gameBoardArray[getWhichTile((currentX - i), (currentY - i))].ownership) !== queenColor)) {
+            let possibleMove = getWhichTile((currentX - i), (currentY - i))
+            possibleMoves.push(possibleMove)
+            break;
+        } else if ((checkForMoveCollision((currentX - i), (currentY - i))) && ((gameBoardArray[getWhichTile((currentX - i), (currentY - i))].ownership) === queenColor)) {
+            break;
+        } else {
+            let possibleMove = getWhichTile((currentX - i), (currentY - i))
+            possibleMoves.push(possibleMove)
+        }
+        i++
+    }
+
+    //northern movement
+
+    while (distN >= i) {
+        if ((checkForMoveCollision(currentX, (currentY + i))) && ((gameBoardArray[getWhichTile(currentX, (currentY + i))].ownership) !== queenColor)) {
+            let possibleMove = getWhichTile(currentX, (currentY + i))
+            possibleMoves.push(possibleMove)
+            break;
+        } else if ((checkForMoveCollision(currentX, (currentY + i))) && ((gameBoardArray[getWhichTile(currentX, (currentY + i))].ownership) === queenColor)) {
+            break;
+        } else {
+            let possibleMove = getWhichTile(currentX, (currentY + i))
+            possibleMoves.push(possibleMove)
+        }
+        i++
+    }
+
+    //southern movement
+    i = 1
+    while (distS >= i) {
+        if ((checkForMoveCollision(currentX, (currentY - i))) && ((gameBoardArray[getWhichTile(currentX, (currentY - i))].ownership) !== queenColor)) {
+            let possibleMove = getWhichTile(currentX, (currentY + i))
+            possibleMoves.push(possibleMove)
+            break;
+        } else if ((checkForMoveCollision(currentX, (currentY - i))) && ((gameBoardArray[getWhichTile(currentX, (currentY - i))].ownership) === queenColor)) {
+            break;
+        } else {
+            let possibleMove = getWhichTile(currentX, (currentY - i))
+            possibleMoves.push(possibleMove)
+        }
+        i++
+    }
+
+    //eastern movement
+    i = 1
+    while (distE >= i) {
+        if ((checkForMoveCollision((currentX + i), currentY) && ((gameBoardArray[getWhichTile((currentX + i), currentY)].ownership) !== queenColor))) {
+            let possibleMove = getWhichTile((currentX + i), currentY)
+            possibleMoves.push(possibleMove)
+            break;
+        } else if ((checkForMoveCollision((currentX + i), currentY) && ((gameBoardArray[getWhichTile((currentX + i), currentY)].ownership) === queenColor))) {
+            break;
+        } else {
+            let possibleMove = getWhichTile((currentX + i), currentY)
+            possibleMoves.push(possibleMove)
+        }
+        i++
+    }
+
+    // western movement
+    i = 1
+    while (distW >= i) {
+        if ((checkForMoveCollision((currentX - i), currentY) && ((gameBoardArray[getWhichTile((currentX - i), currentY)].ownership) !== queenColor))) {
+            let possibleMove = getWhichTile((currentX - i), currentY)
+            possibleMoves.push(possibleMove)
+            break;
+        } else if ((checkForMoveCollision((currentX - i), currentY) && ((gameBoardArray[getWhichTile((currentX - i), currentY)].ownership) === queenColor))) {
+            break;
+        } else {
+            let possibleMove = getWhichTile((currentX - i), currentY)
+            possibleMoves.push(possibleMove)
+        }
+        i++
+    }
+
+    renderGameMovementBoard()
 }
 
 function moveBISHOP(tileInfo) {
@@ -389,7 +582,7 @@ function moveBISHOP(tileInfo) {
     possibleMoves = [];
 
     declareActiveTile(currentX, currentY);
-    
+
     let distN = 8 - currentY;
     let distS = 0 + currentY;
     let distW = 0 + currentX;
@@ -398,8 +591,8 @@ function moveBISHOP(tileInfo) {
     // North East Quadrant Movement
     let i = 1
 
-    while(distN > i || distE > i) {
-        if((checkForMoveCollision((currentX + i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY + i))].ownership) != bishopColor)) {
+    while (distN > i || distE > i) {
+        if ((checkForMoveCollision((currentX + i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY + i))].ownership) !== bishopColor)) {
             let possibleMove = getWhichTile((currentX + i), (currentY + i))
             possibleMoves.push(possibleMove)
         } else if ((checkForMoveCollision((currentX + i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY + i))].ownership) === bishopColor)) {
@@ -414,8 +607,8 @@ function moveBISHOP(tileInfo) {
     // North West Quadrant
     i = 1
 
-    while(distN > i || distW > i) {
-        if((checkForMoveCollision((currentX - i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX - i), (currentY + i))].ownership) !== bishopColor)) {
+    while (distN > i || distW > i) {
+        if ((checkForMoveCollision((currentX - i), (currentY + i))) && ((gameBoardArray[getWhichTile((currentX - i), (currentY + i))].ownership) !== bishopColor)) {
             let possibleMove = getWhichTile((currentX - i), (currentY + i))
             possibleMoves.push(possibleMove)
             break;
@@ -432,8 +625,8 @@ function moveBISHOP(tileInfo) {
 
     i = 1
 
-    while(distS > i || distE > i) {
-        if((checkForMoveCollision((currentX + i), (currentY - i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY - i))].ownership) !== bishopColor)) {
+    while (distS > i || distE > i) {
+        if ((checkForMoveCollision((currentX + i), (currentY - i))) && ((gameBoardArray[getWhichTile((currentX + i), (currentY - i))].ownership) !== bishopColor)) {
             let possibleMove = getWhichTile((currentX + i), (currentY - i))
             possibleMoves.push(possibleMove)
             break;
@@ -450,8 +643,8 @@ function moveBISHOP(tileInfo) {
 
     i = 1
 
-    while(distS > i || distW > i) {
-        if((checkForMoveCollision((currentX - i), (currentY - i))) && ((gameBoardArray[getWhichTile((currentX - i), (currentY - i))].ownership) !== bishopColor)) {
+    while (distS > i || distW > i) {
+        if ((checkForMoveCollision((currentX - i), (currentY - i))) && ((gameBoardArray[getWhichTile((currentX - i), (currentY - i))].ownership) !== bishopColor)) {
             let possibleMove = getWhichTile((currentX - i), (currentY - i))
             possibleMoves.push(possibleMove)
             break;
@@ -463,7 +656,7 @@ function moveBISHOP(tileInfo) {
         }
         i++
     }
-    
+
     renderGameMovementBoard()
 }
 
@@ -484,11 +677,11 @@ function moveROOK(tileInfo) {
     let distE = 8 - currentX;
 
     let i = 1
-    
+
     //northern movement
 
-    while(distN >= i) {
-        if((checkForMoveCollision(currentX, (currentY + i))) && ((gameBoardArray[getWhichTile(currentX, (currentY + i))].ownership) !== rookColor)) {
+    while (distN >= i) {
+        if ((checkForMoveCollision(currentX, (currentY + i))) && ((gameBoardArray[getWhichTile(currentX, (currentY + i))].ownership) !== rookColor)) {
             let possibleMove = getWhichTile(currentX, (currentY + i))
             possibleMoves.push(possibleMove)
             break;
@@ -503,8 +696,8 @@ function moveROOK(tileInfo) {
 
     //southern movement
     i = 1
-    while(distS >= i) {
-        if((checkForMoveCollision(currentX, (currentY - i))) && ((gameBoardArray[getWhichTile(currentX, (currentY - i))].ownership) !== rookColor)) {
+    while (distS >= i) {
+        if ((checkForMoveCollision(currentX, (currentY - i))) && ((gameBoardArray[getWhichTile(currentX, (currentY - i))].ownership) !== rookColor)) {
             let possibleMove = getWhichTile(currentX, (currentY + i))
             possibleMoves.push(possibleMove)
             break;
@@ -516,11 +709,11 @@ function moveROOK(tileInfo) {
         }
         i++
     }
-    
+
     //eastern movement
     i = 1
-    while(distE >= i) {
-        if((checkForMoveCollision((currentX + i), currentY) && ((gameBoardArray[getWhichTile((currentX + i), currentY)].ownership) !== rookColor))) {
+    while (distE >= i) {
+        if ((checkForMoveCollision((currentX + i), currentY) && ((gameBoardArray[getWhichTile((currentX + i), currentY)].ownership) !== rookColor))) {
             let possibleMove = getWhichTile((currentX + i), currentY)
             possibleMoves.push(possibleMove)
             break;
@@ -532,12 +725,12 @@ function moveROOK(tileInfo) {
         }
         i++
     }
-    
+
     // western movement
     i = 1
-    while(distW >= i) {
-        if((checkForMoveCollision((currentX - i), currentY) && ((gameBoardArray[getWhichTile((currentX - i), currentY)].ownership) !== rookColor))) {
-            let possibleMove = getWhichTile(currentX, (currentY + i))
+    while (distW >= i) {
+        if ((checkForMoveCollision((currentX - i), currentY) && ((gameBoardArray[getWhichTile((currentX - i), currentY)].ownership) !== rookColor))) {
+            let possibleMove = getWhichTile((currentX - i), currentY)
             possibleMoves.push(possibleMove)
             break;
         } else if ((checkForMoveCollision((currentX - i), currentY) && ((gameBoardArray[getWhichTile((currentX - i), currentY)].ownership) === rookColor))) {
@@ -611,7 +804,7 @@ function declareMoveToTile(idx) {
     gameBoardArray[activeTile].ownership = null;
     gameBoardArray[activeTile].ownershipType = null;
 
-    if((gameBoardArray[idx].ownership === null) && (gameBoardArray[idx].ownershipType === null)) {
+    if ((gameBoardArray[idx].ownership === null) && (gameBoardArray[idx].ownershipType === null)) {
         targetOwnership = 'unclaimed tile.'
     } else {
         targetOwnership = `${cachedClaimedOwnership} ${cachedClaimedOwnershipType}!`
@@ -625,5 +818,3 @@ function declareMoveToTile(idx) {
 
     renderGameBoard();
 }
-
-
